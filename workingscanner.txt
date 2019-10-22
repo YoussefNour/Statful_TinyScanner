@@ -1,0 +1,58 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.IO;
+
+namespace ConsoleApp2
+{
+    class Program
+    {
+        static string[] reservedWords = { "if", "then", "else", "end", "repeat", "until", "read", "write" };
+        static string[] specialcharacter = { "+", "-", "=", "*", "/", "<", "(", ")", ";", ":=" };
+        static string[] delimeters= {";","{","}" };
+
+        private ArrayList ID = new ArrayList();
+
+        private ArrayList Digits = new ArrayList();
+
+        private List<string> comments = new List<string>();
+
+        static void Main(string[] args)
+        {
+            StreamReader sr = new StreamReader("program.txt");
+            string[] line;
+            char[] separators = {' ','\t','\n'};
+            line = sr.ReadToEnd().Split(separators,StringSplitOptions.RemoveEmptyEntries);
+            foreach (string s in line)
+            {
+                Console.WriteLine(gettoken(s));
+            }
+            //while ((line = sr.ReadLine()) != null)
+            //{
+            //    Console.WriteLine(gettoken(line));
+            //}
+            sr.Close();
+            Console.ReadLine();
+        }
+
+        static string gettoken(string str)
+        {
+            for (int i = 0; i < reservedWords.Length; i++)
+            {
+                if (str.Trim() == reservedWords[i])
+                    return str.Trim() + " --> reserved word";
+            }
+            for (int i = 0; i < specialcharacter.Length; i++)
+            {
+                if (str.Trim() == specialcharacter[i])
+                    return str.Trim() + " --> Special Character";
+            }
+            //for (int i = 0; i < delimeters.Length; i++)
+            //{
+            //    if (str.Trim() == delimeters[i])
+            //        return str.Trim() + " --> delimeter";
+            //}
+            return str.Trim() + " --> Unrecognized";
+        }
+    }
+}

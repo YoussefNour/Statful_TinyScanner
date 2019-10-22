@@ -1,0 +1,60 @@
+using System;
+using System.Collections;
+using System.IO;
+
+namespace Scanner
+{
+    class Program
+    {
+        static string[] reservedWords = {"if","then","else","end","repeat","until","read","write"};
+        static string[] specialcharacter = {"+","-","=","*","/","<","(",")",";",":="};
+
+        private ArrayList ID = new ArrayList();
+        private ArrayList Digits = new ArrayList();
+        private ArrayList Comments = new ArrayList();
+
+        static void Main(string[] args)
+        {
+            string code;
+            string word="";
+            char c;
+            StreamReader sr = new StreamReader("program.txt");
+            code = sr.ReadToEnd();
+            sr.Close();
+            StringReader reader = new StringReader(code);
+            do
+            {
+                c = Convert.ToChar(reader.Read());
+                word += c;
+            }
+        }
+
+        //static String gettoken(string str)
+        //{
+        //    while (str != " ")
+        //    {
+
+        //    }
+        //}
+
+        static string gettoken(string str)
+        {
+            for (int i = 0; i < reservedWords.Length; i++)
+            {
+                if (str.Trim() == reservedWords[i])
+                    return str.Trim() + " --> reserved word";
+            }
+            for (int i = 0; i < specialcharacter.Length; i++)
+            {
+                if (str.Trim() == specialcharacter[i])
+                    return str.Trim() + " --> Special Character";
+            }
+            //for (int i = 0; i < delimeters.Length; i++)
+            //{
+            //    if (str.Trim() == delimeters[i])
+            //        return str.Trim() + " --> delimeter";
+            //}
+            return str.Trim() + " --> Unrecognized";
+        }
+    }
+}
